@@ -125,7 +125,7 @@ pip install -r requirements.txt
 
     | Before Crop | After Crop | Result |
     |---------------|---------|--------|
-    | ![](assets/sam_altman.webp) | ![](assets/sam_altman_512x512.jpg) | ![Video](assets/sam_altman_result.mp4) |
+    | ![](assets/sam_altman.webp) | ![](assets/sam_altman_512x512.jpg) | [![Video](assets/sam_altman_512x512.jpg)](assets/sam_altman_result.mp4) |
 
 <br>
 
