@@ -12,8 +12,6 @@ Project Page: https://deepbrainai-research.github.io/float/
 
 **TL:DR: FLOAT is a flow matching based audio-driven talking portrait video generation method, which can enhance the speech-driven emotional motion.**
 
-<br>
-
 ## Generation Results
 
 | Result 1 | Result 2 |
@@ -122,7 +120,6 @@ pip install -r requirements.txt
 
     <video src="https://github.com/user-attachments/assets/fb3826cd-231b-46f2-809b-11adebe9a1cf"> </video> 
 
-    <br>
 
 3. Running example and results
     ```.bash
