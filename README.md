@@ -23,9 +23,12 @@ Project Page: https://deepbrainai-research.github.io/float/
 | <video src="https://github.com/user-attachments/assets/7b201a5f-a293-46cd-974f-0612062d8d94"> </video> |  <video src="https://github.com/user-attachments/assets/dd4b74dd-40b4-4864-b87d-7cbf4f0d66da"> </video> |
 
 <br>
-
-![efficiency](./assets/fps.png)
 Our method runs faster than current diffusion-based methods with fewer sampling steps and lower memory cost. For more details, please refer to the paper.
+<div align='center'>
+    <image width= 80% src="./assets/fps.png"> </image>
+</div>
+
+
 
 ## Updates
 - [2025.02.17] The inference code and checkpoints are released under a **[Non-commercial License](https://creativecommons.org/licenses/by-nc-nd/4.0/)**.
