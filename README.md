@@ -12,24 +12,33 @@ Project Page: https://deepbrainai-research.github.io/float/
 
 **TL:DR: FLOAT is a flow matching based audio-driven talking portrait video generation method, which can enhance the speech-driven emotional motion.**
 
+<br>
+
+## Generation Results
+
+| Result 1 | Result 2 |
+|---------------|---------|
+| <video src="https://github.com/user-attachments/assets/8c00274d-795d-4ee9-870f-84a859f3e23f"> </video> | <video src="https://github.com/user-attachments/assets/c6e142b3-519b-4cda-b26d-e088414b478d"> </video> |
+
+| Result 3 | Result 4 |
+|--------|-----------|
+| <video src="https://github.com/user-attachments/assets/7b201a5f-a293-46cd-974f-0612062d8d94"> </video> |  <video src="https://github.com/user-attachments/assets/dd4b74dd-40b4-4864-b87d-7cbf4f0d66da"> </video> |
+
+
 ## Updates
 - [2025.02.17] The inference code and checkpoints are released under a **[Non-commercial License](https://creativecommons.org/licenses/by-nc-nd/4.0/)**.
 - [2024.12.03] Selected as a [HuggingFace Daily Papers](https://huggingface.co/papers?date=2024-12-03) on December 3, 2024. 
 - [2024.12.02] The paper is publicly available on [ArXiv](https://arxiv.org/abs/2412.01064).
 
+
 ## Getting Started
 ### Requirements
 ```.bash
-# 1. Clone this Repo
-
-# 2. Create Conda Environment
-
+# 1. Create Conda Environment
 conda create -n FLOAT python=3.8.5
 conda activate FLOAT
 
-
-# 3. Install torch and requirements
-
+# 2. Install torch and requirements
 sh environments.sh
 
 # or manual installation
@@ -111,6 +120,10 @@ pip install -r requirements.txt
         --no_crop                   # [optional] skip cropping
     ```
 
+    <video src="https://github.com/user-attachments/assets/fb3826cd-231b-46f2-809b-11adebe9a1cf"> </video> 
+
+    <br>
+
 3. Running example and results
     ```.bash
     CUDA_VISIBLE_DEVICES=0 python generate.py \
@@ -125,7 +138,7 @@ pip install -r requirements.txt
 
     | Before Crop | After Crop | Result |
     |---------------|---------|--------|
-    | ![](assets/sam_altman.webp) | ![](assets/sam_altman_512x512.jpg) | [![Video](assets/sam_altman_512x512.jpg)](assets/sam_altman_result.mp4) |
+    | ![](assets/sam_altman.webp) | ![](assets/sam_altman_512x512.jpg) | <video src='https://github.com/user-attachments/assets/3353e4e0-00f5-429b-bc66-5db9a72186b8'> </video> |
 
 <br>
 
