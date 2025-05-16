@@ -3,6 +3,143 @@ Official Pytorch Implementation of FLOAT; Flow Matching for Audio-driven Talking
 
 ![preview](./assets/float-abstract.png)
 
+```bash
+conda activate system
+pip install comfy-cli
+
+comfy --here install
+
+cd ComfyUI/custom_nodes
+git clone https://github.com/Chaoses-Ib/ComfyScript.git
+cd ComfyScript
+pip install -e ".[default,cli]"
+pip uninstall aiohttp
+pip install -U aiohttp
+```
+
+```
+Models autodownload to /ComfyUI/models/float
+Or
+https://drive.google.com/file/d/1rvWuM12cyvNvBQNCLmG4Fr2L1rpjQBF0/view?usp=sharing
+```
+
+```python
+from comfy_script.runtime import *
+load()
+from comfy_script.runtime.nodes import *
+    with Workflow():
+    image, _ = LoadImage('sam_altman_512x512.jpg')
+    audio = LoadAudio('aud-sample-vs-1.wav')
+    float_pipe = LoadFloatModels('float.pth')
+    fpsfloat = PrimitiveFloat(25)
+    image = FloatProcess(image, audio, float_pipe, 2, 1, 1, fpsfloat, 'none', True, 982045898717762)
+    _ = VHSVideoCombine(image, fpsfloat, 0, 'AnimateDiff', 'video/nvenc_h264-mp4', False, True, audio, None, None)
+```
+
+```python
+### vim run_head.py
+
+import os
+import time
+import pandas as pd
+import subprocess
+from pathlib import Path
+from itertools import zip_longest
+
+# Configuration
+SEEDS = [42]
+ADJUST_IMAGE_DIR = 'adjust_images'  # Directory containing PNG images
+AUDIO_DIR = 'After_Tomorrow_SPLITED_Fix'  # Directory containing MP3 files
+OUTPUT_DIR = 'ComfyUI/output'
+PYTHON_PATH = '/environment/miniconda3/envs/system/bin/python'
+
+def get_sorted_files(directory, extension):
+    """Return sorted list of files with given extension in directory"""
+    try:
+        files = sorted(Path(directory).glob(f'*.{extension}'))
+        return [str(f) for f in files]
+    except Exception as e:
+        print(f"Error reading {directory}: {e}")
+        return []
+
+def get_latest_output_count():
+    """Return the number of MP4 files in the output directory"""
+    try:
+        return len(list(Path(OUTPUT_DIR).glob('*audio.mp4')))
+    except:
+        return 0
+
+def wait_for_new_output(initial_count):
+    """Wait until a new MP4 file appears in the output directory"""
+    timeout = 3000  # 5 minutes timeout
+    start_time = time.time()
+
+    while time.time() - start_time < timeout:
+        current_count = get_latest_output_count()
+        if current_count > initial_count:
+            time.sleep(1)  # additional 1 second delay
+            return True
+        time.sleep(0.5)
+    return False
+
+def generate_script(image_path, audio_path, seed):
+    """Generate the script with the given image/audio pair"""
+    script_content = f"""from comfy_script.runtime import *
+load()
+from comfy_script.runtime.nodes import *
+
+with Workflow():
+    image, _ = LoadImage('{image_path}')
+    audio = LoadAudio('{audio_path}')
+    float_pipe = LoadFloatModels('float.pth')
+    fpsfloat = PrimitiveFloat(25)
+    image = FloatProcess(image, audio, float_pipe, 2, 1, 1, fpsfloat, 'none', True, {seed})
+    _ = VHSVideoCombine(image, fpsfloat, 0, 'AnimateDiff', 'video/nvenc_h264-mp4', False, True, audio, None, None)
+"""
+    return script_content
+
+def main():
+    # Ensure output directory exists
+    os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+    # Get sorted lists of images and audio files
+    image_files = get_sorted_files(ADJUST_IMAGE_DIR, 'png')
+    audio_files = get_sorted_files(AUDIO_DIR, 'mp3')
+
+    if not image_files or not audio_files:
+        print("No image or audio files found. Exiting.")
+        return
+
+    # Pair them up (will stop when the shorter list is exhausted)
+    file_pairs = list(zip(image_files, audio_files))
+
+    # Main generation loop
+    for seed in SEEDS:
+        for image_path, audio_path in file_pairs:
+            # Generate script
+            script = generate_script(image_path, audio_path, seed)
+
+            # Write script to file
+            with open('run_float_process.py', 'w') as f:
+                f.write(script)
+
+            # Get current output count before running
+            initial_count = get_latest_output_count()
+
+            # Run the script
+            print(f"Generating video with image: {image_path}, audio: {audio_path}, seed: {seed}")
+            subprocess.run([PYTHON_PATH, 'run_float_process.py'])
+
+            # Wait for new output
+            if not wait_for_new_output(initial_count):
+                print("Timeout waiting for new output. Continuing to next generation.")
+                continue
+
+if __name__ == "__main__":
+    main()
+```
+
+
 **FLOAT: Generative Motion Latent Flow Matching for Audio-driven Talking Portrait**<br>
 [Taekyung Ki](https://taekyungki.github.io), [Dongchan Min](https://kevinmin95.github.io), [Gyeongsu Chae](https://www.aistudios.com/ko)
 
