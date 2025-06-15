@@ -35,6 +35,12 @@ cd ../../
 comfy launch -- --listen 0.0.0.0
 ```
 
+
+
+https://github.com/user-attachments/assets/c1dda396-0ae9-4131-a99d-7337cfd79750
+
+
+
 ```
 Models autodownload to /ComfyUI/models/float
 Or
