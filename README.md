@@ -3,8 +3,18 @@ Official Pytorch Implementation of FLOAT; Flow Matching for Audio-driven Talking
 
 ![preview](./assets/float-abstract.png)
 
+#### Up to 1min in 24g
+
 ```bash
+https://www.reddit.com/r/comfyui/comments/1l9f11u/great_news_for_comfyuifloat_users_vram_usage/
+->
+https://github.com/florestefano1975/ComfyUI-FLOAT/blob/master/models/float/FLOAT.py
+
 conda activate system
+
+wget https://files.pythonhosted.org/packages/6f/41/23e60b0dac42da9a6a264a1a9a82046283aeddbe522717c14be4e85421fd/comfyui_frontend_package-1.21.7-py3-none-any.whl
+pip install comfyui_frontend_package-1.21.7-py3-none-any.whl
+
 pip install comfy-cli
 
 comfy --here install
@@ -15,6 +25,14 @@ cd ComfyScript
 pip install -e ".[default,cli]"
 pip uninstall aiohttp
 pip install -U aiohttp
+
+cd ..
+git clone https://github.com/florestefano1975/ComfyUI-FLOAT
+pip install -r ComfyUI-FLOAT/requirements.txt
+
+cd ../../
+
+comfy launch -- --listen 0.0.0.0
 ```
 
 ```
